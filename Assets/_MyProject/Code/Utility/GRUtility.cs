@@ -9,5 +9,17 @@ namespace GoldenRoot
         {
             return Convert.ToInt32(boolean);
         }
+
+        public static bool GetComponentInParentOrChildren<T>(this GameObject obj, ref T component)
+        {
+            if (obj == null) return false;
+            var c = obj.GetComponentInParent<T>();
+            if (c == null)
+            {
+                c = obj.GetComponentInChildren<T>();
+            }
+            component = c;
+            return component != null;
+        }
     }
 }

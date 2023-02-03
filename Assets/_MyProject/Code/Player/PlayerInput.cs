@@ -1,22 +1,27 @@
 using System;
 using UnityEngine;
 
-namespace GoldenRoot.Player
+namespace GoldenRoot
 {
     public class PlayerInput : MonoBehaviour
     {
-        [SerializeField] private GlobalInputMapping.PlayerType _PlayerType;
+        [SerializeField] private PlayerReference _PlayerReference;
         
         public Vector2 MoveAxis => new Vector2(
-                                GlobalInputMapping.IsKey(GlobalInputMapping.InputMap.MoveRight, _PlayerType).ToInt() - GlobalInputMapping.IsKey(GlobalInputMapping.InputMap.MoveLeft, _PlayerType).ToInt(),
-                                GlobalInputMapping.IsKey(GlobalInputMapping.InputMap.MoveUp, _PlayerType).ToInt() - GlobalInputMapping.IsKey(GlobalInputMapping.InputMap.MoveDown, _PlayerType).ToInt());
+                                IsKey(GlobalInputMapping.InputMap.MoveRight).ToInt() - IsKey(GlobalInputMapping.InputMap.MoveLeft).ToInt(),
+                                IsKey(GlobalInputMapping.InputMap.MoveUp).ToInt() - IsKey(GlobalInputMapping.InputMap.MoveDown).ToInt());
 
-        public bool IsDig => GlobalInputMapping.IsDown(GlobalInputMapping.InputMap.DigAction, _PlayerType);
+        public bool IsDig => GlobalInputMapping.IsDown(GlobalInputMapping.InputMap.DigAction, _PlayerReference.Type);
 
-        private void Update()
+        private bool IsKey(GlobalInputMapping.InputMap action) => GlobalInputMapping.IsKey(action, _PlayerReference.Type);
+        
+        /************************************************************************************************************************/
+        #if UNITY_EDITOR
+        private void OnValidate()
         {
-            GRDebug.Log($"MoveAxis:{MoveAxis}");
-            GRDebug.Log($"IsDig:{IsDig}");
+            gameObject.GetComponentInParentOrChildren(ref _PlayerReference);
         }
+        #endif
+        /************************************************************************************************************************/
     }
 }

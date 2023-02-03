@@ -16,11 +16,6 @@ namespace GoldenRoot
 
         /************************************************************************************************************************/
 
-        public enum PlayerType
-        {
-            P1, P2
-        };
-        
         public enum InputMap
         {
             MoveUp,
@@ -30,7 +25,7 @@ namespace GoldenRoot
             DigAction    
         }
         
-        [System.Serializable]
+        [Serializable]
         public class InputBinding
         {
             public InputMap Action;
@@ -96,12 +91,12 @@ namespace GoldenRoot
         // Dynamic Player Map
         /************************************************************************************************************************/
 
-        private Dictionary<InputMap, InputBinding> GetDictType(PlayerType type)
+        private Dictionary<InputMap, InputBinding> GetDictType(PlayerReference.PlayerID type)
         {
             switch (type)
             {
-                case PlayerType.P1: return InputMapDictP1;
-                case PlayerType.P2: return InputMapDictP2;
+                case PlayerReference.PlayerID.P1: return InputMapDictP1;
+                case PlayerReference.PlayerID.P2: return InputMapDictP2;
                 default: GRDebug.LogErrorEnumNotImplement(type); return null;
             }
         }
@@ -110,7 +105,7 @@ namespace GoldenRoot
         // Singleton
         /************************************************************************************************************************/
 
-        private static GlobalInputMapping Singleton = null;
+        private static GlobalInputMapping Singleton;
         
         /************************************************************************************************************************/
         
@@ -124,25 +119,26 @@ namespace GoldenRoot
             
             Singleton = this;
             InputMapDictP1 = InputMapDictP1;
+            InputMapDictP2 = InputMapDictP2;
         }
 
         /************************************************************************************************************************/
         
-        public static bool IsDown(InputMap action, PlayerType type)
+        public static bool IsDown(InputMap action, PlayerReference.PlayerID type)
         {
             var binding = Singleton.GetDictType(type)[action];
             return Input.GetKeyDown(binding.Keyboard) ||
                    Input.GetKeyDown(binding.Gamepad);
         }
 
-        public static bool IsUp(InputMap action, PlayerType type)
+        public static bool IsUp(InputMap action, PlayerReference.PlayerID type)
         {
             var binding = Singleton.GetDictType(type)[action];
             return Input.GetKeyUp(binding.Keyboard) ||
                    Input.GetKeyUp(binding.Gamepad);
         }
 
-        public static bool IsKey(InputMap action, PlayerType type)
+        public static bool IsKey(InputMap action, PlayerReference.PlayerID type)
         {
             var binding = Singleton.GetDictType(type)[action];
             return Input.GetKey(binding.Keyboard) ||
