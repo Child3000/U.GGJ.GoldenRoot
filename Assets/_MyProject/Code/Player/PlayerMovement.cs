@@ -9,6 +9,7 @@ namespace GoldenRoot
         /************************************************************************************************************************/
         [SerializeField] private PlayerReference _PlayerReference;
         private PlayerInput PlayerInput => _PlayerReference.Input;
+        private PlayerBehaviour PlayerBehaviour => _PlayerReference.Behaviour;
         /************************************************************************************************************************/
         [SerializeField] private CharacterController _CharController;
         /************************************************************************************************************************/
@@ -26,6 +27,8 @@ namespace GoldenRoot
 
         private void Update()
         {
+            if (PlayerBehaviour.IsStunned) return;
+            
             // translation
             if (PlayerInput.MoveAxis != Vector2.zero)
             {
