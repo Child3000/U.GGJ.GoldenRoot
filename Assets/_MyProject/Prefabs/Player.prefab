@@ -213,6 +213,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PlayerReference: {fileID: 7492078256533671187}
   _GridMap2D: {fileID: 0}
+<<<<<<< Updated upstream
+=======
+  _ShovelTransform: {fileID: 0}
+>>>>>>> Stashed changes
 --- !u!143 &3859289204527359713
 CharacterController:
   m_ObjectHideFlags: 0
@@ -359,37 +363,37 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.41189888
+      value: 0.40990177
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.17848444
+      value: 0.18398386
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.89351916
+      value: -0.89328957
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.010305339
+      value: -0.01281801
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 7.39
+      value: 7.35
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -131.759
+      value: -132
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -19.28
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
