@@ -6,7 +6,7 @@ namespace GoldenRoot
 {
     public class GridMap2D : MonoBehaviour, System.IDisposable
     {
-        // [SerializeField] private Vector2 _CellSize = new Vector2(1, 1);
+        [Header("Grids")]
         [SerializeField] private int2 _GridSize = new int2(5, 5);
         [SerializeField] private GameObject _TilePrefab;
 
@@ -16,21 +16,14 @@ namespace GoldenRoot
         [SerializeField] private int _TileMaxHealth;
         [SerializeField, Range(0.0f, 1.0f)] private float _TileShrinkSize;
 
+        [Space, Header("Roots")]
+        [SerializeField] private RootItem[] _RootTypes;
+
         private int _FlattenCount => _GridSize.x * _GridSize.y;
         private GameObject[] _Tiles;
         private int[] _TileHealths;
 
         private TileAnimationContainer _TileAnimationContainer;
-
-        /************************************************************************************************************************/
-
-        // private Vector3 GetCenterCellPosition(int x, int y) => GetCellPosition(x, y) + new Vector3(_CellSize.x, 0f, _CellSize.y) * 0.5f;
-
-        // private Vector3 GetCellPosition(int x, int y) => GridOrigin + new Vector3(x * _CellSize.x, 0f, y * _CellSize.y);
-
-        // private Vector3 GridOrigin => transform.position;
-
-        /************************************************************************************************************************/
 
         private void Awake()
         {
@@ -128,30 +121,29 @@ namespace GoldenRoot
             this.Dispose();
         }
 
-        // #if UNITY_EDITOR
-        // private void OnDrawGizmos()
-        // {
-        //     // Draw center position.
-        //     for (int x = 0; x < _GridSize.x; x++)
-        //     {
-        //         for (int y = 0; y < _GridSize.y; y++)
-        //         {
-        //             Gizmos.DrawSphere(GetCenterCellPosition(x, y), 0.1f);
-        //         }
-        //     }
-            
-        //     // Draw grid line.
-        //     for (int x = 0; x <= _GridSize.x; x++)
-        //     {
-        //         Gizmos.DrawLine(GetCellPosition(x, 0), GetCellPosition(x, _GridSize.y));
-        //     }
+        #if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            // draw vertical grid lines
+            for (int x = 0; x <= _GridSize.x; x++)
+            {
+                Gizmos.DrawLine(new Vector3(x, 0.0f, 0.0f), new Vector3(x, 0.0f, _GridSize.y));
+            }
 
-        //     for (int y = 0; y <= _GridSize.y; y++)
-        //     {
-        //         Gizmos.DrawLine(GetCellPosition(0, y), GetCellPosition(_GridSize.x, y));
-        //     }
-        // }
-        // #endif
-        /************************************************************************************************************************/
+            // draw horizontal grid lines
+            for (int y = 0; y <= _GridSize.y; y++)
+            {
+                Gizmos.DrawLine(new Vector3(0.0f, 0.0f, y), new Vector3(_GridSize.x, 0.0f, y));
+            }
+        }
+
+        private void OnValidate()
+        {
+            for (int r = 0; r < this._RootTypes.Length; r++)
+            {
+                this._RootTypes[r].OnValidate();
+            }
+        }
+        #endif
     }
 }
