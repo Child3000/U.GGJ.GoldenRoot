@@ -491,6 +491,16 @@ PrefabInstance:
       propertyPath: _GridMap2D
       value: 
       objectReference: {fileID: 2068304936}
+    - target: {fileID: 881317548734072575, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
+        type: 3}
+      propertyPath: _ShovelRevertSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 881317548734072575, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
+        type: 3}
+      propertyPath: _ShovelRotateAmount
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 919132148044987123, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
         type: 3}
       propertyPath: m_IsActive

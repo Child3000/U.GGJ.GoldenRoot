@@ -520,6 +520,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PlayerReference: {fileID: 7492078256533671187}
   _ShovelTrans: {fileID: 1775352243729580749}
+  _ShovelRotateAmount: 50
+  _ShovelPokeAmount: 1
+  _ShovelRevertSpeed: 5
   _DigTarget: {fileID: 5068562389776608807}
   _GridMap2D: {fileID: 0}
   _StunAttackRange: 0.7
@@ -827,22 +830,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70710653
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.70710707
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
@@ -852,7 +855,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
@@ -863,6 +866,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4812087940819023593, guid: 7483e7ae73a03304f91a63a932f68d82,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -4812087940819023593, guid: 7483e7ae73a03304f91a63a932f68d82,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -4812087940819023593, guid: 7483e7ae73a03304f91a63a932f68d82,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4812087940819023593, guid: 7483e7ae73a03304f91a63a932f68d82,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -2707268459014408561, guid: 7483e7ae73a03304f91a63a932f68d82,
         type: 3}
@@ -878,6 +901,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shovel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762605161493764484, guid: 7483e7ae73a03304f91a63a932f68d82,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762605161493764484, guid: 7483e7ae73a03304f91a63a932f68d82,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762605161493764484, guid: 7483e7ae73a03304f91a63a932f68d82,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762605161493764484, guid: 7483e7ae73a03304f91a63a932f68d82,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7483e7ae73a03304f91a63a932f68d82, type: 3}
