@@ -76,7 +76,7 @@ namespace GoldenRoot
                 float3 position = this.transform.position;
                 int3 gridIdx = (int3)position;
 
-                this._GridMap2D.DigTile(gridIdx.x, gridIdx.z, 1);
+                this._GridMap2D.DigTile(gridIdx.x, gridIdx.z, 1, this._PlayerReference.Type);
             }
 
             if (PlayerInput.IsAttack && !IsStunActionInCooldown)
