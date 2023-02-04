@@ -19,18 +19,24 @@ namespace GoldenRoot
         [Space, Header("Roots")]
         [SerializeField] private RootItem[] _RootTypes;
 
-        private int _FlattenCount => _GridSize.x * _GridSize.y;
+        /************************************************************************************************************************/
+        public int CellCount => this._GridSize.x * this._GridSize.y;
+        public int RootTypeCount => this._RootTypes.Length;
+
         private GameObject[] _Tiles;
         private int[] _TileHealths;
+        private int[] _TileRootIndices;
+        /************************************************************************************************************************/
 
         private TileAnimationContainer _TileAnimationContainer;
 
         private void Awake()
         {
-            this._Tiles = new GameObject[this._FlattenCount];
-            this._TileHealths = new int[this._FlattenCount];
+            this._Tiles = new GameObject[this.CellCount];
+            this._TileHealths = new int[this.CellCount];
+            this._TileRootIndices = new int[this.CellCount];
 
-            this._TileAnimationContainer = new TileAnimationContainer(this._FlattenCount);
+            this._TileAnimationContainer = new TileAnimationContainer(this.CellCount);
 
             for (int x = 0; x < this._GridSize.x; x++)
             {
@@ -60,20 +66,15 @@ namespace GoldenRoot
             };
 
             JobHandle jobHandle = default;
-            jobHandle = tileAnimationJob.ScheduleParallel(this._FlattenCount, 128, jobHandle);
+            jobHandle = tileAnimationJob.ScheduleParallel(this.CellCount, 128, jobHandle);
 
             jobHandle.Complete();
 
             // update tile scales
-            for (int t = 0; t < this._FlattenCount; t++)
+            for (int t = 0; t < this.CellCount; t++)
             {
                 this._Tiles[t].transform.localScale = Vector3.one *
                     _TileAnimationContainer.na_Scales[t];
-            }
-
-            if (Input.GetKey(KeyCode.Space))
-            {
-                this.DigTile(0, 0, 0);
             }
         }
 
@@ -111,6 +112,25 @@ namespace GoldenRoot
             );
         }
 
+        private int GetRandomRootIndices()
+        {
+            int probablitySum = 0;
+
+            for (int r = 0; r < this._RootTypes.Length; r++)
+            {
+                probablitySum += this._RootTypes[r].Probability;
+            }
+
+            int randProb = UnityEngine.Random.Range(0, probablitySum);
+
+            for (int r = 0; r < this._RootTypes.Length; r++)
+            {
+                // if (probablitySum)
+            }
+
+            return 0;
+        }
+
         public void Dispose()
         {
             this._TileAnimationContainer.Dispose();
@@ -121,6 +141,7 @@ namespace GoldenRoot
             this.Dispose();
         }
 
+        /************************************************************************************************************************/
         #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
@@ -145,5 +166,6 @@ namespace GoldenRoot
             }
         }
         #endif
+        /************************************************************************************************************************/
     }
 }
