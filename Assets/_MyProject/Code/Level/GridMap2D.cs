@@ -1,15 +1,17 @@
 using UnityEngine;
 using Unity.Mathematics;
 using Unity.Jobs;
+using DG.Tweening;
 
 namespace GoldenRoot
 {
     public class GridMap2D : MonoBehaviour, System.IDisposable
     {
-        [Header("Grids")]
+        [Header("Tile Grid")]
         [SerializeField] private int2 _GridSize = new int2(5, 5);
         [SerializeField] private GameObject _TilePrefab;
 
+        [Header("Tile Animation")]
         [SerializeField, Range(0.0f, 8.0f)] private float _ShrinkSpeed;
         [SerializeField, Range(0.0f, 8.0f)] private float _EnlargeSpeed;
         [SerializeField] private int _TileMinHealth;
@@ -17,8 +19,12 @@ namespace GoldenRoot
         [SerializeField, Range(0.0f, 1.0f)] private float _TileShrinkSize;
         [SerializeField] private float _TileCooldownDuration;
 
-        [Space, Header("Roots")]
+        [Space, Header("Root")]
         [SerializeField] private RootItem[] _RootTypes;
+
+        [Space, Header("Root Animation")]
+        [SerializeField] private float _RootJumpForce;
+        [SerializeField] private float _RootJumpDistance;
 
         /************************************************************************************************************************/
         public int CellCount => this._GridSize.x * this._GridSize.y;
@@ -153,6 +159,20 @@ namespace GoldenRoot
                 GamePointManager.Singleton.AddPoints(playerID, rootItem.Point);
                 // put tile in cooldown
                 this._TileCooldownContainer.na_CountdownTime[flattenIdx] = this._TileCooldownDuration;
+
+                if (rootItem.RootPrefab != null && rootItem.Point != 0)
+                {
+                    // spawn root prefab
+                    GameObject root = Instantiate(rootItem.RootPrefab, new Vector3(x + 0.5f, 0.0f, y + 0.5f), Quaternion.identity);
+                    // play animation
+                    Sequence seq = DOTween.Sequence();
+                    seq.Append(root.transform.DOMoveY(this._RootJumpDistance, this._RootJumpForce))
+                        .Append(root.transform.DOShakeScale(0.5f))
+                        .AppendInterval(1.5f)
+                        .Append(root.transform.DORotate(new Vector3(0f, 900f, 0f), 2f, RotateMode.FastBeyond360))
+                        .Join(root.transform.DOScale(0.01f, 1.5f))
+                        .AppendCallback(() => Destroy(root));
+                }
 
                 // generate new health and root root index
                 health = this.GetRandomHealth();

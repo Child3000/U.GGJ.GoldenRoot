@@ -11,6 +11,7 @@ namespace GoldenRoot
 
         public int Point => this._Point;
         public int Probability => this._Probablity;
+        public GameObject RootPrefab => this._RootPrefab;
 
         /************************************************************************************************************************/
         #if UNITY_EDITOR
