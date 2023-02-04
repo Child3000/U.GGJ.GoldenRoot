@@ -6,37 +6,37 @@ using Unity.Burst;
 public struct TileAnimationJob : IJobFor
 {
     public float DeltaTime;
-    public float EnlargeSize;
-    public float EnlargeSpeed;
+    public float ShrinkSize;
     public float ShrinkSpeed;
+    public float EnlargeSpeed;
 
     public TileAnimationContainer TileAnimationContainer;
 
     public void Execute(int index)
     {
-        bool enlarge = this.TileAnimationContainer.na_Enlarge[index];
+        bool shrink = this.TileAnimationContainer.na_Shrink[index];
         float scale = this.TileAnimationContainer.na_Scales[index];
 
-        if (enlarge)
+        if (shrink)
         {
-            scale = math.min(
-                this.EnlargeSize, scale + this.DeltaTime * this.EnlargeSpeed
+            scale = math.max(
+                this.ShrinkSize, scale - this.DeltaTime * this.ShrinkSpeed
             );
 
             // if already reached the largest size, start shrinking
-            if (scale >= this.EnlargeSize)
+            if (scale <= this.ShrinkSize)
             {
-                enlarge = false;
+                shrink = false;
             }
         } else
         {
-            // shrink back to size of 1
-            scale = math.max(
-                1.0f, scale - this.DeltaTime * this.ShrinkSpeed
+            // enlarge back to size of 1
+            scale = math.min(
+                1.0f, scale + this.DeltaTime * this.EnlargeSpeed
             );
         }
 
         this.TileAnimationContainer.na_Scales[index] = scale;
-        this.TileAnimationContainer.na_Enlarge[index] = enlarge;
+        this.TileAnimationContainer.na_Shrink[index] = shrink;
     }
 }

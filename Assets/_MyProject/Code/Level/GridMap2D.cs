@@ -10,11 +10,11 @@ namespace GoldenRoot
         [SerializeField] private int2 _GridSize = new int2(5, 5);
         [SerializeField] private GameObject _TilePrefab;
 
-        [SerializeField, Range(0.0f, 8.0f)] private float _EnlargeSpeed;
         [SerializeField, Range(0.0f, 8.0f)] private float _ShrinkSpeed;
+        [SerializeField, Range(0.0f, 8.0f)] private float _EnlargeSpeed;
         [SerializeField] private int _TileMinHealth;
         [SerializeField] private int _TileMaxHealth;
-        [SerializeField] private float _TileEnlargeSize;
+        [SerializeField, Range(0.0f, 1.0f)] private float _TileShrinkSize;
 
         private int _FlattenCount => _GridSize.x * _GridSize.y;
         private GameObject[] _Tiles;
@@ -59,9 +59,9 @@ namespace GoldenRoot
             TileAnimationJob tileAnimationJob = new TileAnimationJob
             {
                 DeltaTime = Time.deltaTime,
-                EnlargeSize = this._TileEnlargeSize,
-                EnlargeSpeed = this._EnlargeSpeed,
+                ShrinkSize = this._TileShrinkSize,
                 ShrinkSpeed = this._ShrinkSpeed,
+                EnlargeSpeed = this._EnlargeSpeed,
 
                 TileAnimationContainer = this._TileAnimationContainer
             };
@@ -108,7 +108,7 @@ namespace GoldenRoot
             }
 
             this._TileHealths[flattenIdx] = health;
-            this._TileAnimationContainer.na_Enlarge[flattenIdx] = true;
+            this._TileAnimationContainer.na_Shrink[flattenIdx] = true;
         }
 
         private int GetRandomHealth()

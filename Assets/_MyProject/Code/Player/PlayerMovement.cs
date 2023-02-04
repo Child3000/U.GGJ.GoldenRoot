@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Unity.Mathematics;
 
 namespace GoldenRoot
 {
@@ -16,7 +15,6 @@ namespace GoldenRoot
         [SerializeField] private float _MoveSpeed = 5f;
         [SerializeField] private float _RotateSpeed = 130f;
         /************************************************************************************************************************/
-        [SerializeField] private GridMap2D _GridMap2D;
 
         public Vector3 FaceDirection
         {
