@@ -85,6 +85,7 @@ namespace GoldenRoot
             this._ShovelTrans.localRotation = Quaternion.Slerp(
                 this._ShovelTrans.localRotation, Quaternion.identity, Time.deltaTime * this._ShovelRevertSpeed
             );
+            // revert shovel to origin position
             this._ShovelTrans.localPosition = Vector3.Lerp(
                 this._ShovelTrans.localPosition, this._ShovelOriginLocalPosition, Time.deltaTime * this._ShovelRevertSpeed
             );
