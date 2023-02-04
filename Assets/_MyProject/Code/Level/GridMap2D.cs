@@ -113,6 +113,7 @@ namespace GoldenRoot
             // if not cooldown yet, do nothing
             if (this._TileCooldownContainer.na_CountdownTime[flattenIdx] > 0.0f)
             {
+                Debug.Log($"tile: {x}, {y} is on cooldown...");
                 return;
             }
 
@@ -125,6 +126,7 @@ namespace GoldenRoot
                 Debug.Assert(rootIdx < this.RootTypeCount, "given rootIdx is larger than RootTypeCount.");
 
                 RootItem rootItem = this._RootTypes[rootIdx];
+                Debug.Log($"{playerID} broke tile: {x}, {y}, and got {rootItem.Point} points.");
 
                 // reward player with points
                 GamePointManager.Singleton.AddPoints(playerID, rootItem.Point);
@@ -151,7 +153,7 @@ namespace GoldenRoot
         {
             int probablitySum = 0;
 
-            for (int r = 0; r < this._RootTypes.Length; r++)
+            for (int r = 0; r < this.RootTypeCount; r++)
             {
                 probablitySum += this._RootTypes[r].Probability;
             }
@@ -159,10 +161,10 @@ namespace GoldenRoot
             int randProb = UnityEngine.Random.Range(0, probablitySum);
 
             int probAccumulation = 0;
-            for (int r = 0; r < this._RootTypes.Length; r++)
+            for (int r = 0; r < this.RootTypeCount; r++)
             {
                 probAccumulation += this._RootTypes[r].Probability;
-                if (probablitySum < probAccumulation)
+                if (randProb < probAccumulation)
                 {
                     return r;
                 }
