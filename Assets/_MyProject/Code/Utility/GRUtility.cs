@@ -5,11 +5,19 @@ namespace GoldenRoot
 {
     public static class GRUtility
     {
+        /************************************************************************************************************************/
         public static float AtLeast(float val, float min)
         {
             if (val < min) val = min;
             return val;
         }
+
+        public static int AtLeast(int val, int min)
+        {
+            if (val < min) val = min;
+            return val;
+        }
+        /************************************************************************************************************************/
         
         public static int ToInt(this bool boolean)
         {

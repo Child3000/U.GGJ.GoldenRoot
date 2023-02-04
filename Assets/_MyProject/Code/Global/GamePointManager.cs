@@ -55,6 +55,11 @@ namespace GoldenRoot
             }
             
             Singleton = this;
+
+            foreach (var pointData in _PointsDatas)
+            {
+                pointData.CurrentPoint = pointData.CurrentPoint;
+            }
         }
 
         public void AddPoints(PlayerReference.PlayerID type, int value)
