@@ -8,17 +8,21 @@ using UnityEngine.SceneManagement;
 
 namespace GoldenRoot.MenuScene
 {
+    public delegate void OnMenuSceneEnded(MenuSelectionResult result);
+    
     public class CharacterCustomizationTimer : MonoBehaviour
     {
         public event Callback OnTimerEnd;
+
+        public static event OnMenuSceneEnded OnSceneEnd;
         
         [SerializeField] private TMP_Text _TimerText;
 
         [SerializeField] private float _SelectionTimeInSeconds;
 
-        [SerializeField] private SceneReference _MainScene;
-
         [SerializeField] private CharacterCustomizationPlayerSelectionArea[] _SelectionArea;
+
+        [SerializeField] private MenuSelectionResult _SelectionResult;
         
         private float _CountdownTime;
 
@@ -30,8 +34,6 @@ namespace GoldenRoot.MenuScene
 
         private IEnumerator CorouAwake()
         {
-            bool timeEndWithNormalSelection = false;
-            
             while (true)
             {
                 _TimerText.text = $"{Mathf.CeilToInt(_CountdownTime) / 60}:{(Mathf.CeilToInt(_CountdownTime) % 60):00}";
@@ -45,7 +47,6 @@ namespace GoldenRoot.MenuScene
                 else if (IsAllSelectionReady())
                 {
                     OnTimerEnd?.Invoke();
-                    timeEndWithNormalSelection = true;
                     break;
                 }
                 
@@ -66,8 +67,7 @@ namespace GoldenRoot.MenuScene
                 yield return null;
             }
 
-
-            SceneManager.LoadSceneAsync(_MainScene.Name);
+            OnSceneEnd?.Invoke(Instantiate(_SelectionResult.gameObject).GetComponent<MenuSelectionResult>());
         }
 
         private bool IsAllSelectionReady()

@@ -16,8 +16,12 @@ namespace GoldenRoot.MenuScene
 
         [SerializeField] private CharacterPreviewSpawnPoint SpawnPoint;
         [SerializeField] private CharacterCustomizationTimer _Timer;
+
+        [SerializeField] private MenuSelectionResult _Result;
         
         private int navigationIndex = 0;
+        public int NavigationIndex => navigationIndex;
+        
         private GameObject characterInstance;
         private bool _IsReady;
 
@@ -59,8 +63,8 @@ namespace GoldenRoot.MenuScene
             IsReady = true;
             
             // Save decision.
-            if (SpawnPoint.PlayerType == PlayerReference.PlayerID.P1) MenuSelectionResult.Singleton.P1SelectionIndex = navigationIndex;
-            if (SpawnPoint.PlayerType == PlayerReference.PlayerID.P2) MenuSelectionResult.Singleton.P2SelectionIndex = navigationIndex;
+            if (SpawnPoint.PlayerType == PlayerReference.PlayerID.P1) _Result.P1SelectionIndex = navigationIndex;
+            if (SpawnPoint.PlayerType == PlayerReference.PlayerID.P2) _Result.P2SelectionIndex = navigationIndex;
         }
 
         private void Update()
