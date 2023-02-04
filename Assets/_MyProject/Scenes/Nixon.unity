@@ -490,7 +490,7 @@ PrefabInstance:
     - target: {fileID: 8715317499408247702, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8715317499408247702, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
         type: 3}
@@ -584,7 +584,7 @@ PrefabInstance:
     - target: {fileID: 8715317499408247702, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 8715317499408247702, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
         type: 3}
@@ -672,6 +672,22 @@ MonoBehaviour:
   _TileMinHealth: 3
   _TileMaxHealth: 5
   _TileShrinkSize: 0.5
+  _RootTypes:
+  - _Probablity: 10
+    _Point: 0
+    _RootPrefab: {fileID: 0}
+  - _Probablity: 4
+    _Point: 1
+    _RootPrefab: {fileID: 2172838783175774971, guid: cc73542088db40d4c86e1c3ef5e2cb1d,
+      type: 3}
+  - _Probablity: 2
+    _Point: 5
+    _RootPrefab: {fileID: 3170851020417581198, guid: 8bfde15f435d9aa43964815bd192b99e,
+      type: 3}
+  - _Probablity: 1
+    _Point: 10
+    _RootPrefab: {fileID: 1376721357394320729, guid: e66e30311f6e65b4e9c994356516db46,
+      type: 3}
 --- !u!4 &2068304937
 Transform:
   m_ObjectHideFlags: 0

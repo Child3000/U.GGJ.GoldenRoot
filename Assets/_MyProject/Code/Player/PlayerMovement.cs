@@ -52,6 +52,7 @@ namespace GoldenRoot
 
         private void OnDrawGizmos()
         {
+            Gizmos.color = Color.green;
             Gizmos.DrawLine(transform.position, transform.position + FaceDirection * 2f);
         }
         #endif
