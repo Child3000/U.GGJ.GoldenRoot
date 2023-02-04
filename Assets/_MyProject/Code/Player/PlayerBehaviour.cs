@@ -37,15 +37,23 @@ namespace GoldenRoot
         // Stun Cooldown
         /************************************************************************************************************************/
 
+        public float StunActionRegenerateRatioProgress => AppTimeWhenUsedStunActionOnValidTarget.HasValue ? 
+                        Mathf.Clamp01((float) (Time.timeAsDouble - AppTimeWhenUsedStunActionOnValidTarget) / (float) (StunActionCooldownInSeconds)) : 
+                        0f;
+        
         private float StunActionCooldownInSeconds => 10f;
         private double? AppTimeWhenUsedStunActionOnValidTarget { get; set; }
 
-        private bool IsStunActionInCooldown => AppTimeWhenUsedStunActionOnValidTarget.HasValue && Time.timeAsDouble < AppTimeWhenUsedStunActionOnValidTarget + StunActionCooldownInSeconds;
+        public bool IsStunActionInCooldown => AppTimeWhenUsedStunActionOnValidTarget.HasValue && Time.timeAsDouble < AppTimeWhenUsedStunActionOnValidTarget + StunActionCooldownInSeconds;
         
         /************************************************************************************************************************/
         // Stunnable
         /************************************************************************************************************************/
 
+        public float StunnedDegenerateRatioProgress => AppTimeWhenStunned.HasValue ? 
+                    Mathf.Clamp01((float) (Time.timeAsDouble - AppTimeWhenStunned) / (float) (StunPeriodInSeconds)) : 
+                    0f;
+        
         public bool IsStunned => AppTimeWhenStunned.HasValue && Time.timeAsDouble < AppTimeWhenStunned + StunPeriodInSeconds;
         
         private double? AppTimeWhenStunned { get; set; }
@@ -68,7 +76,7 @@ namespace GoldenRoot
                 float3 position = this.transform.position;
                 int3 gridIdx = (int3)position;
 
-                this._GridMap2D.DigTile(gridIdx.x, gridIdx.z, 1);
+                this._GridMap2D.DigTile(gridIdx.x, gridIdx.z, 1, this._PlayerReference.Type);
             }
 
             if (PlayerInput.IsAttack && !IsStunActionInCooldown)
