@@ -47,7 +47,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GrassSmoothness:
-        m_Texture: {fileID: 2800000, guid: 9418aa3d55fbc564aa19467d17095aef, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MudMap:
@@ -84,12 +84,12 @@ Material:
     - _MudScale: 0.3
     - _Noise1Scale: 10
     - _Noise1Strength: 0.2
-    - _NoiseMinValue: 0.5
+    - _NoiseMinValue: 0
     - _Nosie0Scale: 5
     - _Pulse: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Transition: -1
+    - _Transition: -0.01
     - _UVScale: 0.11
     m_Colors:
     - _PulseColor: {r: 2.8284264, g: 1.8041137, b: 0.4642887, a: 1}

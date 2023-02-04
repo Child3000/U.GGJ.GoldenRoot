@@ -18,6 +18,7 @@ namespace GoldenRoot
         [SerializeField] private int _TileMaxHealth;
         [SerializeField, Range(0.0f, 1.0f)] private float _TileShrinkSize;
         [SerializeField] private float _TileCooldownDuration;
+        [SerializeField] private float _TileRegenerationInterval;
 
         [Space, Header("Root")]
         [SerializeField] private RootItem[] _RootTypes;
@@ -32,24 +33,22 @@ namespace GoldenRoot
 
         private GameObject[] _Tiles;
         private Material[] _TileMaterials;
-        private int[] _TileHealths;
-        private int[] _TileTotalHealths;
         private int[] _TileRootIndices;
         /************************************************************************************************************************/
 
         private TileAnimationContainer _TileAnimationContainer;
         private TileCooldownContainer _TileCooldownContainer;
+        private TileHealthRegenerationContainer _TileHealthRegenerationContainer;
 
         private void Start()
         {
             this._Tiles = new GameObject[this.CellCount];
             this._TileMaterials = new Material[this.CellCount];
-            this._TileHealths = new int[this.CellCount];
-            this._TileTotalHealths = new int[this.CellCount];
             this._TileRootIndices = new int[this.CellCount];
 
             this._TileAnimationContainer = new TileAnimationContainer(this.CellCount);
             this._TileCooldownContainer = new TileCooldownContainer(this.CellCount);
+            this._TileHealthRegenerationContainer = new TileHealthRegenerationContainer(this.CellCount);
 
             for (int x = 0; x < this._GridSize.x; x++)
             {
@@ -62,8 +61,9 @@ namespace GoldenRoot
                     this._Tiles[flattenIdx] = tile;
                     this._TileMaterials[flattenIdx] = tile.GetComponentInChildren<MeshRenderer>().material;
                     int health = this.GetRandomHealth();
-                    this._TileHealths[flattenIdx] = health;
-                    this._TileTotalHealths[flattenIdx] = health;
+                    this._TileHealthRegenerationContainer.na_TileHealths[flattenIdx] = health;
+                    this._TileHealthRegenerationContainer.na_TileTotalHealths[flattenIdx] = health;
+                    this._TileHealthRegenerationContainer.na_TileHealthDeltaTime[flattenIdx] = this._TileRegenerationInterval;
                     this._TileRootIndices[flattenIdx] = this.GetRandomRootIndex();
                 }
             }
@@ -90,10 +90,20 @@ namespace GoldenRoot
                 TileCooldownContainer = this._TileCooldownContainer,
             };
 
+            // perform tile healt generation
+            TileHealthRegenerationJob tileHealthRegenerationJob = new TileHealthRegenerationJob
+            {
+                DeltaTime = Time.deltaTime,
+                TileRegenerationInterval = this._TileRegenerationInterval,
+
+                TileHealthRegenerationContainer = this._TileHealthRegenerationContainer,
+            };
+
             JobHandle jobHandle0 = tileAnimationJob.ScheduleParallel(this.CellCount, 128, default);
             JobHandle jobHandle1 = tileCooldownJob.ScheduleParallel(this.CellCount, 128, default);
+            JobHandle jobHandle2 = tileHealthRegenerationJob.ScheduleParallel(this.CellCount, 128, default);
 
-            JobHandle jobHandle = JobHandle.CombineDependencies(jobHandle0, jobHandle1);
+            JobHandle jobHandle = JobHandle.CombineDependencies(jobHandle0, jobHandle1, jobHandle2);
 
             jobHandle.Complete();
 
@@ -107,14 +117,14 @@ namespace GoldenRoot
 
                 if (this._TileCooldownContainer.na_CountdownTime[t] == 0.0f)
                 {
-                    int totalHealth = this._TileTotalHealths[t];
-                    int health = this._TileHealths[t];
+                    int totalHealth = this._TileHealthRegenerationContainer.na_TileTotalHealths[t];
+                    int health = this._TileHealthRegenerationContainer.na_TileHealths[t];
                     float ratio = (float)health / (float)totalHealth;
 
-                    this._TileMaterials[t].SetFloat(ShaderID._Transition, math.lerp(1.0f, -1.0f, ratio));
+                    this._TileMaterials[t].SetFloat(ShaderID._Transition, math.lerp(0.6f, -0.01f, ratio));
                 } else
                 {
-                    this._TileMaterials[t].SetFloat(ShaderID._Transition, 1.0f);
+                    this._TileMaterials[t].SetFloat(ShaderID._Transition, 0.6f);
                 }
             }
         }
@@ -144,7 +154,10 @@ namespace GoldenRoot
                 return;
             }
 
-            int health = this._TileHealths[flattenIdx];
+            // reset health regeneration time
+            this._TileHealthRegenerationContainer.na_TileHealthDeltaTime[flattenIdx] = this._TileRegenerationInterval;
+
+            int health = this._TileHealthRegenerationContainer.na_TileHealths[flattenIdx];
             int rootIdx = this._TileRootIndices[flattenIdx];
             health -= damage;
 
@@ -178,10 +191,10 @@ namespace GoldenRoot
                 health = this.GetRandomHealth();
                 rootIdx = this.GetRandomRootIndex();
 
-                this._TileTotalHealths[flattenIdx] = health;
+                this._TileHealthRegenerationContainer.na_TileTotalHealths[flattenIdx] = health;
             }
 
-            this._TileHealths[flattenIdx] = health;
+            this._TileHealthRegenerationContainer.na_TileHealths[flattenIdx] = health;
             this._TileRootIndices[flattenIdx] = rootIdx;
         }
 
@@ -220,6 +233,7 @@ namespace GoldenRoot
         {
             this._TileAnimationContainer.Dispose();
             this._TileCooldownContainer.Dispose();
+            this._TileHealthRegenerationContainer.Dispose();
         }
 
         private void OnDestroy()

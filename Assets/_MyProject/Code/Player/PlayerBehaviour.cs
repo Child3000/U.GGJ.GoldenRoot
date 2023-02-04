@@ -10,6 +10,8 @@ namespace GoldenRoot
         [SerializeField] private PlayerReference _PlayerReference;
         private PlayerInput PlayerInput => _PlayerReference.Input;
         /************************************************************************************************************************/
+        [SerializeField] private Transform _ShovelTrans;
+        [SerializeField] private Transform _DigTarget;
         [SerializeField] private GridMap2D _GridMap2D;
         
         /************************************************************************************************************************/
@@ -73,7 +75,7 @@ namespace GoldenRoot
             
             if (PlayerInput.IsDig)
             {
-                float3 position = this.transform.position;
+                float3 position = this._DigTarget.position;
                 int3 gridIdx = (int3)position;
 
                 this._GridMap2D.DigTile(gridIdx.x, gridIdx.z, 1, this._PlayerReference.Type);
@@ -93,8 +95,6 @@ namespace GoldenRoot
                         AppTimeWhenUsedStunActionOnValidTarget = Time.timeAsDouble;
                     }
                 }
-                
-                Debug.Log("IsAttack");
             }
         }
         
