@@ -41,6 +41,16 @@ namespace GoldenRoot
             {
                 FaceDirection = Vector3.RotateTowards(FaceDirection, TargetFaceDirection, _RotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 0f);
             }
+
+            if (PlayerInput.IsDig)
+            {
+                Debug.Log("IsDig");
+            }
+
+            if (PlayerInput.IsAttack)
+            {
+                Debug.Log("IsAttack");
+            }
         }
 
         /************************************************************************************************************************/
