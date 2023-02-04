@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Unity.Mathematics;
 
 namespace GoldenRoot
 {
@@ -15,6 +16,7 @@ namespace GoldenRoot
         [SerializeField] private float _MoveSpeed = 5f;
         [SerializeField] private float _RotateSpeed = 130f;
         /************************************************************************************************************************/
+        [SerializeField] private GridMap2D _GridMap2D;
 
         public Vector3 FaceDirection
         {
@@ -40,16 +42,6 @@ namespace GoldenRoot
             if (TargetFaceDirection != Vector3.zero)
             {
                 FaceDirection = Vector3.RotateTowards(FaceDirection, TargetFaceDirection, _RotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 0f);
-            }
-
-            if (PlayerInput.IsDig)
-            {
-                Debug.Log("IsDig");
-            }
-
-            if (PlayerInput.IsAttack)
-            {
-                Debug.Log("IsAttack");
             }
         }
 

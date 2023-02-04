@@ -1,12 +1,13 @@
 using UnityEngine;
+using Unity.Mathematics;
 using Unity.Jobs;
 
 namespace GoldenRoot
 {
     public class GridMap2D : MonoBehaviour, System.IDisposable
     {
-        [SerializeField] private Vector2 _CellSize = new Vector2(1, 1);
-        [SerializeField] private Vector2Int _GridSize = new Vector2Int(5, 5);
+        // [SerializeField] private Vector2 _CellSize = new Vector2(1, 1);
+        [SerializeField] private int2 _GridSize = new int2(5, 5);
         [SerializeField] private GameObject _TilePrefab;
 
         [SerializeField, Range(0.0f, 8.0f)] private float _EnlargeSpeed;
@@ -83,8 +84,19 @@ namespace GoldenRoot
             }
         }
 
+        /// <summary>Apply damage to a tile and animate it.</summary>
         public void DigTile(int x, int y, int damage)
         {
+            if (x < 0 || y < 0)
+            {
+                return;
+            }
+
+            if (x >= _GridSize.x || y >= _GridSize.y)
+            {
+                return;
+            }
+
             int flattenIdx = MathUtil.FlattenIndex(x, y, this._GridSize.y);
 
             int health = this._TileHealths[flattenIdx];
@@ -101,7 +113,9 @@ namespace GoldenRoot
 
         private int GetRandomHealth()
         {
-            return Random.Range(this._TileMinHealth, this._TileMaxHealth + 1);
+            return UnityEngine.Random.Range(
+                this._TileMinHealth, this._TileMaxHealth + 1
+            );
         }
 
         public void Dispose()

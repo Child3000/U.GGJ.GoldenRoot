@@ -552,6 +552,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 543450652570591305, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 881317548734072575, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
+        type: 3}
+      propertyPath: _GridMap2D
+      value: 
+      objectReference: {fileID: 2068304936}
+    - target: {fileID: 6528445580671613962, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
+        type: 3}
+      propertyPath: _GridMap2D
+      value: 
+      objectReference: {fileID: 2068304936}
     - target: {fileID: 7742236675991386957, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
         type: 3}
       propertyPath: m_Name
@@ -621,6 +636,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 881317548734072575, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
+        type: 3}
+      propertyPath: _GridMap2D
+      value: 
+      objectReference: {fileID: 2068304936}
+    - target: {fileID: 6528445580671613962, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
+        type: 3}
+      propertyPath: _GridMap2D
+      value: 
+      objectReference: {fileID: 2068304936}
     - target: {fileID: 7492078256533671187, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
         type: 3}
       propertyPath: _Type
@@ -717,8 +742,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eff00a611ad4542a832c9373a335a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CellSize: {x: 1, y: 1}
-  _GridSize: {x: 8, y: 8}
+  _GridSize:
+    x: 8
+    y: 8
   _TilePrefab: {fileID: 4372511310473891179, guid: 3fac825d814570c409145164d2967a4b,
     type: 3}
   _EnlargeSpeed: 3

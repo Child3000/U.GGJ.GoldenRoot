@@ -1,6 +1,8 @@
 using Unity.Mathematics;
 using Unity.Jobs;
+using Unity.Burst;
 
+[BurstCompile]
 public struct TileAnimationJob : IJobFor
 {
     public float DeltaTime;
