@@ -22,7 +22,8 @@ namespace GoldenRoot
             MoveDown,
             MoveLeft,
             MoveRight,
-            DigAction    
+            DigAction,
+            AttackAction,
         }
         
         [Serializable]

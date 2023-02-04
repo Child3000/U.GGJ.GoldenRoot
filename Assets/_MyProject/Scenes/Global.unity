@@ -166,7 +166,10 @@ MonoBehaviour:
     Keyboard: 100
     Gamepad: 0
   - Action: 4
-    Keyboard: 122
+    Keyboard: 120
+    Gamepad: 0
+  - Action: 5
+    Keyboard: 99
     Gamepad: 0
   _InputBindingsP2:
   - Action: 0
@@ -183,6 +186,9 @@ MonoBehaviour:
     Gamepad: 0
   - Action: 4
     Keyboard: 110
+    Gamepad: 0
+  - Action: 5
+    Keyboard: 109
     Gamepad: 0
 --- !u!4 &144630422
 Transform:
