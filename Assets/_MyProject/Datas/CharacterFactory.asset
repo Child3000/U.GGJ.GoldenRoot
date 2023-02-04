@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc8be079627421e908341099afdd2c3, type: 3}
+  m_Name: CharacterFactory
+  m_EditorClassIdentifier: 
+  _CharacterDatas:
+  - CharacterName: Bean Cop
+    CharacterPrefab: {fileID: 1283017171755564, guid: f10c394033f254647873f3d28a75a062,
+      type: 3}
+    CharacterIcon: {fileID: 0}
+  - CharacterName: Bean Cowboy
+    CharacterPrefab: {fileID: 1849736199912346, guid: e332982425ee2ec48b168979bb7b43f5,
+      type: 3}
+    CharacterIcon: {fileID: 0}
+  - CharacterName: Bean Female
+    CharacterPrefab: {fileID: 1965410809269166, guid: bc89cff11dc72544faaaa69b501fd596,
+      type: 3}
+    CharacterIcon: {fileID: 0}
+  - CharacterName: Bean Towngirl
+    CharacterPrefab: {fileID: 1645872946987862, guid: 9b88eb630e9e15a4f950eae741685374,
+      type: 3}
+    CharacterIcon: {fileID: 0}
