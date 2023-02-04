@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3525624324087688114
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Mud
+  m_Shader: {fileID: -6465566751694194690, guid: 755b43aecc9083443b027c24cd99ee20,
+    type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _GrassMap:
+        m_Texture: {fileID: 2800000, guid: 66bc8afd898eb0843bc84d4e8de3f109, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GrassMetallic:
+        m_Texture: {fileID: 2800000, guid: 00a1ecb06eb57c0408c5d1edf1d66a50, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GrassNormal:
+        m_Texture: {fileID: 2800000, guid: b435e41729153274981ba92f2602fc21, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GrassSmoothness:
+        m_Texture: {fileID: 2800000, guid: 9418aa3d55fbc564aa19467d17095aef, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MudMap:
+        m_Texture: {fileID: 2800000, guid: 0f00797ae3039d047af6a98d301d6c86, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MudMetallic:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MudNormal:
+        m_Texture: {fileID: 2800000, guid: a644053d668e3844f8a8cbc0dac46034, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MudSmoothness:
+        m_Texture: {fileID: 2800000, guid: 3bd78019c9a50bc4986005b5913acabe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _GrassScale: 0.05
+    - _MudScale: 0.3
+    - _Noise1Scale: 10
+    - _Noise1Strength: 0.2
+    - _NoiseMinValue: 0.5
+    - _Nosie0Scale: 5
+    - _Pulse: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Transition: -1
+    - _UVScale: 0.11
+    m_Colors:
+    - _PulseColor: {r: 2.8284264, g: 1.8041137, b: 0.4642887, a: 1}
+  m_BuildTextureStacks: []

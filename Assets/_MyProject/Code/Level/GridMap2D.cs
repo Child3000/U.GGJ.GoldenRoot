@@ -25,17 +25,21 @@ namespace GoldenRoot
         public int RootTypeCount => this._RootTypes.Length;
 
         private GameObject[] _Tiles;
+        private Material[] _TileMaterials;
         private int[] _TileHealths;
+        private int[] _TileTotalHealths;
         private int[] _TileRootIndices;
         /************************************************************************************************************************/
 
         private TileAnimationContainer _TileAnimationContainer;
         private TileCooldownContainer _TileCooldownContainer;
 
-        private void Awake()
+        private void Start()
         {
             this._Tiles = new GameObject[this.CellCount];
+            this._TileMaterials = new Material[this.CellCount];
             this._TileHealths = new int[this.CellCount];
+            this._TileTotalHealths = new int[this.CellCount];
             this._TileRootIndices = new int[this.CellCount];
 
             this._TileAnimationContainer = new TileAnimationContainer(this.CellCount);
@@ -50,7 +54,10 @@ namespace GoldenRoot
                     tile.transform.position = new Vector3(x + 0.5f, 0.0f, y + 0.5f);
 
                     this._Tiles[flattenIdx] = tile;
-                    this._TileHealths[flattenIdx] = this.GetRandomHealth();
+                    this._TileMaterials[flattenIdx] = tile.GetComponentInChildren<MeshRenderer>().material;
+                    int health = this.GetRandomHealth();
+                    this._TileHealths[flattenIdx] = health;
+                    this._TileTotalHealths[flattenIdx] = health;
                     this._TileRootIndices[flattenIdx] = this.GetRandomRootIndex();
                 }
             }
@@ -87,8 +94,22 @@ namespace GoldenRoot
             // update tile scales
             for (int t = 0; t < this.CellCount; t++)
             {
-                this._Tiles[t].transform.localScale = Vector3.one *
-                    _TileAnimationContainer.na_Scales[t];
+                float scale = _TileAnimationContainer.na_Scales[t];
+
+                this._Tiles[t].transform.localScale = Vector3.one * scale;
+                this._TileMaterials[t].SetFloat(ShaderID._Pulse, (1.0f - scale) / this._TileShrinkSize);
+
+                if (this._TileCooldownContainer.na_CountdownTime[t] == 0.0f)
+                {
+                    int totalHealth = this._TileTotalHealths[t];
+                    int health = this._TileHealths[t];
+                    float ratio = (float)health / (float)totalHealth;
+
+                    this._TileMaterials[t].SetFloat(ShaderID._Transition, math.lerp(1.0f, -1.0f, ratio));
+                } else
+                {
+                    this._TileMaterials[t].SetFloat(ShaderID._Transition, 1.0f);
+                }
             }
         }
 
@@ -136,6 +157,8 @@ namespace GoldenRoot
                 // generate new health and root root index
                 health = this.GetRandomHealth();
                 rootIdx = this.GetRandomRootIndex();
+
+                this._TileTotalHealths[flattenIdx] = health;
             }
 
             this._TileHealths[flattenIdx] = health;
