@@ -15,6 +15,7 @@ namespace GoldenRoot
         [SerializeField] private int _TileMinHealth;
         [SerializeField] private int _TileMaxHealth;
         [SerializeField, Range(0.0f, 1.0f)] private float _TileShrinkSize;
+        [SerializeField] private float _TileCooldownDuration;
 
         [Space, Header("Roots")]
         [SerializeField] private RootItem[] _RootTypes;
@@ -29,6 +30,7 @@ namespace GoldenRoot
         /************************************************************************************************************************/
 
         private TileAnimationContainer _TileAnimationContainer;
+        private TileCooldownContainer _TileCooldownContainer;
 
         private void Awake()
         {
@@ -37,6 +39,7 @@ namespace GoldenRoot
             this._TileRootIndices = new int[this.CellCount];
 
             this._TileAnimationContainer = new TileAnimationContainer(this.CellCount);
+            this._TileCooldownContainer = new TileCooldownContainer(this.CellCount);
 
             for (int x = 0; x < this._GridSize.x; x++)
             {
@@ -48,6 +51,7 @@ namespace GoldenRoot
 
                     this._Tiles[flattenIdx] = tile;
                     this._TileHealths[flattenIdx] = this.GetRandomHealth();
+                    this._TileRootIndices[flattenIdx] = this.GetRandomRootIndex();
                 }
             }
         }
@@ -62,11 +66,21 @@ namespace GoldenRoot
                 ShrinkSpeed = this._ShrinkSpeed,
                 EnlargeSpeed = this._EnlargeSpeed,
 
-                TileAnimationContainer = this._TileAnimationContainer
+                TileAnimationContainer = this._TileAnimationContainer,
             };
 
-            JobHandle jobHandle = default;
-            jobHandle = tileAnimationJob.ScheduleParallel(this.CellCount, 128, jobHandle);
+            // perform cooldown for each tile
+            TileCooldownJob tileCooldownJob = new TileCooldownJob
+            {
+                DeltaTime = Time.deltaTime,
+
+                TileCooldownContainer = this._TileCooldownContainer,
+            };
+
+            JobHandle jobHandle0 = tileAnimationJob.ScheduleParallel(this.CellCount, 128, default);
+            JobHandle jobHandle1 = tileCooldownJob.ScheduleParallel(this.CellCount, 128, default);
+
+            JobHandle jobHandle = JobHandle.CombineDependencies(jobHandle0, jobHandle1);
 
             jobHandle.Complete();
 
@@ -79,7 +93,7 @@ namespace GoldenRoot
         }
 
         /// <summary>Apply damage to a tile and animate it.</summary>
-        public void DigTile(int x, int y, int damage)
+        public void DigTile(int x, int y, int damage, PlayerReference.PlayerID playerID)
         {
             if (x < 0 || y < 0)
             {
@@ -93,16 +107,37 @@ namespace GoldenRoot
 
             int flattenIdx = MathUtil.FlattenIndex(x, y, this._GridSize.y);
 
+            // perform tile animation
+            this._TileAnimationContainer.na_Shrink[flattenIdx] = true;
+
+            // if not cooldown yet, do nothing
+            if (this._TileCooldownContainer.na_CountdownTime[flattenIdx] > 0.0f)
+            {
+                return;
+            }
+
             int health = this._TileHealths[flattenIdx];
+            int rootIdx = this._TileRootIndices[flattenIdx];
             health -= damage;
 
             if (health <= 0)
             {
+                Debug.Assert(rootIdx < this.RootTypeCount, "given rootIdx is larger than RootTypeCount.");
+
+                RootItem rootItem = this._RootTypes[rootIdx];
+
+                // reward player with points
+                GamePointManager.Singleton.AddPoints(playerID, rootItem.Point);
+                // put tile in cooldown
+                this._TileCooldownContainer.na_CountdownTime[flattenIdx] = this._TileCooldownDuration;
+
+                // generate new health and root root index
                 health = this.GetRandomHealth();
+                rootIdx = this.GetRandomRootIndex();
             }
 
             this._TileHealths[flattenIdx] = health;
-            this._TileAnimationContainer.na_Shrink[flattenIdx] = true;
+            this._TileRootIndices[flattenIdx] = rootIdx;
         }
 
         private int GetRandomHealth()
@@ -112,7 +147,7 @@ namespace GoldenRoot
             );
         }
 
-        private int GetRandomRootIndices()
+        private int GetRandomRootIndex()
         {
             int probablitySum = 0;
 
@@ -123,9 +158,14 @@ namespace GoldenRoot
 
             int randProb = UnityEngine.Random.Range(0, probablitySum);
 
+            int probAccumulation = 0;
             for (int r = 0; r < this._RootTypes.Length; r++)
             {
-                // if (probablitySum)
+                probAccumulation += this._RootTypes[r].Probability;
+                if (probablitySum < probAccumulation)
+                {
+                    return r;
+                }
             }
 
             return 0;
@@ -134,6 +174,7 @@ namespace GoldenRoot
         public void Dispose()
         {
             this._TileAnimationContainer.Dispose();
+            this._TileCooldownContainer.Dispose();
         }
 
         private void OnDestroy()
