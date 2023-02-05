@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using Eflatun.SceneReference;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,14 +19,14 @@ namespace GoldenRoot.MenuScene
         //    
         //    Camera cam = Camera.main;
         //    cam.gameObject.SetActive(false);
-        //    StartMenuSceneInAdditiveMode(SceneManager.GetActiveScene(), (s) =>
+        //    StartMenuSceneInAdditiveMode((s) =>
         //    {
         //        cam.gameObject.SetActive(true);
         //        Debug.Log("Get backs the result");
         //    });
         //}
 
-        public void StartMenuSceneInAdditiveMode(Scene fromScene, Action<MenuSelectionResult> resultCallback)
+        public void StartMenuSceneInAdditiveMode(Action<MenuSelectionResult> resultCallback)
         {
             _ResultCallback = resultCallback;
             StartCoroutine(CorouLoadAdditive(_MenuScene));

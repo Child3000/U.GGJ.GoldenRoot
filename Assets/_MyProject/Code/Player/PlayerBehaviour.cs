@@ -80,6 +80,7 @@ namespace GoldenRoot
         private void Update()
         {
             if (IsStunned) return;
+            if (GameManager.Singleton.GameState != GameState.Playing) return;
 
             // revert shovel to origin rotation
             this._ShovelTrans.localRotation = Quaternion.Slerp(

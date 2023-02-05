@@ -28,6 +28,7 @@ namespace GoldenRoot
         private void Update()
         {
             if (PlayerBehaviour.IsStunned) return;
+            if (GameManager.Singleton.GameState != GameState.Playing) return;
             
             // translation
             if (PlayerInput.MoveAxis != Vector2.zero)
