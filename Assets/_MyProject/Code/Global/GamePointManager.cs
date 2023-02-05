@@ -67,5 +67,11 @@ namespace GoldenRoot
             var pointData = _PointsDatas.First(x => x.PlayerType == type);
             pointData.CurrentPoint += value;
         }
+
+        public float GetPoint(PlayerReference.PlayerID playerType)
+        {
+            var pointData = _PointsDatas.First(x => x.PlayerType == playerType);
+            return pointData.CurrentPoint;
+        }
     }
 }
