@@ -590,6 +590,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 881317548734072575, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
         type: 3}
+      propertyPath: sfxVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 881317548734072575, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
+        type: 3}
       propertyPath: _GridMap2D
       value: 
       objectReference: {fileID: 2068304936}
@@ -612,6 +617,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8620796284950171072, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8715317499408247702, guid: 121b5ed47da4d424dbb3ce56dcb563e2,
         type: 3}

@@ -507,6 +507,16 @@ MonoBehaviour:
   _CharController: {fileID: 3859289204527359713}
   _MoveSpeed: 5
   _RotateSpeed: 800
+  _AudioSource: {fileID: 8620796284950171072}
+  walkSFXs:
+  - {fileID: 8300000, guid: 75e9403b559daea49890a632e20cc705, type: 3}
+  - {fileID: 8300000, guid: 385bf207e47a80d40b59b48046ef6e8b, type: 3}
+  - {fileID: 8300000, guid: dc482fae30ba96f4086d8dd6bb511dd1, type: 3}
+  - {fileID: 8300000, guid: 4ded646ea8d077b419d1123c67a157a8, type: 3}
+  - {fileID: 8300000, guid: e683f1923e1f8f741bac9957627e3e47, type: 3}
+  - {fileID: 8300000, guid: 48c3d2ae89baa734eb1bf216f573a49d, type: 3}
+  sfxVolume: 0.5
+  sfxDuration: 1
 --- !u!114 &881317548734072575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,7 +543,8 @@ MonoBehaviour:
   swingSFXs:
   - {fileID: 8300000, guid: a457f037967348e468fe301350f646af, type: 3}
   - {fileID: 8300000, guid: 0f91ebec07138334db9a7171370d4884, type: 3}
-  sfxVolume: 0.7
+  hitSFX: {fileID: 8300000, guid: 974e92155f4a8e142aeafbea018158c7, type: 3}
+  sfxVolume: 1
   _StunAttackRange: 0.7
   _StunOriginForwardOffset: 1.1
   _StunOriginHeightOffset: 1

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace GoldenRoot
@@ -16,6 +17,18 @@ namespace GoldenRoot
         [SerializeField] private float _MoveSpeed = 5f;
         [SerializeField] private float _RotateSpeed = 130f;
         /************************************************************************************************************************/
+
+        /************************************************************************************************************************/
+        // Dig, Swing Hit Sound Efffects
+        /************************************************************************************************************************/
+        [SerializeField] private AudioSource _AudioSource;
+        [SerializeField] private AudioClip[] walkSFXs;
+        [SerializeField] private float sfxVolume = 0.5f;
+        [SerializeField] private float walkInterval = 1f;
+        /************************************************************************************************************************/
+
+        private float accumWalkTime = 0f;
+
 
         public Vector3 FaceDirection
         {
@@ -38,6 +51,14 @@ namespace GoldenRoot
                 _CharController.Move(motion);
 
                 TargetFaceDirection = moveDirection.normalized;
+
+                accumWalkTime += Time.fixedDeltaTime;
+                if (accumWalkTime > walkInterval)
+                {
+                    accumWalkTime = 0;
+                    int clipToPlay = UnityEngine.Random.Range(0, walkSFXs.Length);
+                    _AudioSource.PlayOneShot(walkSFXs[clipToPlay], sfxVolume);
+                }
             }
 
             Vector3 position = transform.position;
@@ -51,8 +72,9 @@ namespace GoldenRoot
             }
         }
 
+
         /************************************************************************************************************************/
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         private void OnValidate()
         {
             gameObject.GetComponentInParentOrChildren(ref _CharController);
