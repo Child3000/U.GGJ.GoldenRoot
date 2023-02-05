@@ -15,10 +15,16 @@ namespace GoldenRoot
         [SerializeField] private float _ShovelRevertSpeed;
         [SerializeField] private Transform _DigTarget;
         [SerializeField] private GridMap2D _GridMap2D;
+
+        /************************************************************************************************************************/
+        // Dig, Swing Hit Sound Efffects
+        /************************************************************************************************************************/
+
         [SerializeField] private AudioSource _AudioSource;
         [SerializeField] private AudioClip[] digSFXs;
         [SerializeField] private AudioClip[] swingSFXs;
-        [SerializeField] private float sfxVolume = 0.7f;
+        [SerializeField] private AudioClip hitSFX;
+        [SerializeField] private float sfxVolume = 1f;
 
         /************************************************************************************************************************/
         // Stun Players
@@ -119,9 +125,17 @@ namespace GoldenRoot
                     if (_TempStunResults[i].gameObject != gameObject &&
                         _TempStunResults[i].TryGetComponent<PlayerBehaviour>(out var component))
                     {
+                        // play hit sound
+                        _AudioSource.PlayOneShot(hitSFX, sfxVolume);
                         component.Stunned();
 
                         AppTimeWhenUsedStunActionOnValidTarget = Time.timeAsDouble;
+                    }
+                    else
+                    {
+                        // play swing sound
+                        int clipToPlay = UnityEngine.Random.Range(0, swingSFXs.Length);
+                        _AudioSource.PlayOneShot(swingSFXs[clipToPlay], sfxVolume);
                     }
                 }
 

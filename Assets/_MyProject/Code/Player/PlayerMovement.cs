@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace GoldenRoot
@@ -16,6 +17,15 @@ namespace GoldenRoot
         [SerializeField] private float _MoveSpeed = 5f;
         [SerializeField] private float _RotateSpeed = 130f;
         /************************************************************************************************************************/
+
+        /************************************************************************************************************************/
+        // Dig, Swing Hit Sound Efffects
+        /************************************************************************************************************************/
+        [SerializeField] private AudioSource _AudioSource;
+        [SerializeField] private AudioClip[] walkSFXs;
+        [SerializeField] private float sfxVolume = 1f;
+        /************************************************************************************************************************/
+
 
         public Vector3 FaceDirection
         {
@@ -37,6 +47,7 @@ namespace GoldenRoot
                 Vector3 motion =  moveDirection * (_MoveSpeed * Time.deltaTime);
                 _CharController.Move(motion);
 
+                StartCoroutine(PlayWalkSFX());
                 TargetFaceDirection = moveDirection.normalized;
             }
 
@@ -50,6 +61,20 @@ namespace GoldenRoot
                 FaceDirection = Vector3.RotateTowards(FaceDirection, TargetFaceDirection, _RotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 0f);
             }
         }
+
+        
+        IEnumerator PlayWalkSFX()
+        {
+            if (!_AudioSource.isPlaying)
+            {
+                int clipToPlay = UnityEngine.Random.Range(0, walkSFXs.Length);
+                _AudioSource.PlayOneShot(walkSFXs[0],sfxVolume);
+            }
+            yield return null;
+        }
+
+
+
 
         /************************************************************************************************************************/
         #if UNITY_EDITOR
