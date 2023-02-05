@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -15,41 +13,17 @@ namespace GoldenRoot
         /************************************************************************************************************************/
         [SerializeField] private TMP_Text _TimerText;
         /************************************************************************************************************************/
-        
-        public enum AutoRunOption
-        {
-            /// <summary>
-            /// Do not start countdown automatically.
-            /// </summary>
-            None,
-            
-            /// <summary>
-            /// Start countdown in Unity Awake() callback.
-            /// </summary>
-            Awake,
-            
-            /// <summary>
-            /// Start countdown in Unity Start() callback.
-            /// </summary>
-            Start
-        }
-
-        [SerializeField] private AutoRunOption _AutoRunOption = AutoRunOption.None;
-        
+        public static GameTimeManager Singleton;
+        private Coroutine _RunningCoroutine;
 
         private void Awake()
         {
-            if (_AutoRunOption == AutoRunOption.Awake)
+            if (Singleton == null)
             {
-                StartCountdown();
-            }
-        }
-
-        private void Start()
-        {
-            if (_AutoRunOption == AutoRunOption.Start)
+                Singleton = this;
+            } else
             {
-                StartCountdown();
+                Destroy(this.gameObject);
             }
         }
 
@@ -57,9 +31,14 @@ namespace GoldenRoot
 
         public void StartCountdown()
         {
-            StartCoroutine(CorouCountdown(_TotalCountdownSeconds));
+            if (this._RunningCoroutine != null)
+            {
+                StopCoroutine(this._RunningCoroutine);
+            }
+
+            this._RunningCoroutine = StartCoroutine(CorouCountdown(_TotalCountdownSeconds));
         }
-        
+
         private IEnumerator CorouCountdown(float t)
         {
             float countdown = t;
