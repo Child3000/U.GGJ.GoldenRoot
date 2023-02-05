@@ -13,6 +13,8 @@ namespace GoldenRoot
         /************************************************************************************************************************/
         [SerializeField] private TMP_Text _TimerText;
         /************************************************************************************************************************/
+        [SerializeField] private GameObject _GameTimeCanvas;
+
         public static GameTimeManager Singleton;
         private Coroutine _RunningCoroutine;
 
@@ -28,6 +30,11 @@ namespace GoldenRoot
         }
 
         public event Callback OnTimerEnd;
+
+        public void SetCanvasActive(bool value)
+        {
+            this._GameTimeCanvas.SetActive(value);
+        }
 
         public void StartCountdown()
         {

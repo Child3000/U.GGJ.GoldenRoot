@@ -18,6 +18,7 @@ namespace GoldenRoot
 
         [Header("UI")]
         [SerializeField] private GameObject _MainMenu;
+        [SerializeField] private GameObject _GameOverMenu;
         [SerializeField] private TextMeshProUGUI _CenterText;
 
         [Header("Audio")]
@@ -48,6 +49,14 @@ namespace GoldenRoot
         private void Start()
         {
             this.PlayClip(this._MenuClip, true, 1.0f);
+        }
+
+        private void Update()
+        {
+            // if (Input.GetKeyDown(KeyCode.Space))
+            // {
+            //     this._GameState = GameState.Paused;
+            // }
         }
 
         private void PlayClip(AudioClip clip, bool loop, float volume)
@@ -100,7 +109,9 @@ namespace GoldenRoot
                         {
                             this._CenterText.text = "";
                             this._GameState = GameState.Playing;
+                            GameTimeManager.Singleton.SetCanvasActive(true);
                             GameTimeManager.Singleton.StartCountdown();
+                            GameTimeManager.Singleton.OnTimerEnd += this.OnGameEnd;
 
                             this.PlayClip(this._GameplayClip, false, 0.7f);
                         }
@@ -122,6 +133,11 @@ namespace GoldenRoot
             Sequence seq = DOTween.Sequence();
             seq.Append(this._CameraTransform.DOJump(new Vector3(4f, 9f, 4f), 0.5f, 1, 3.0f))
                .Join(this._CameraTransform.DORotate(new Vector3(90f, 0f, 0f), 3.0f, RotateMode.Fast));
+        }
+
+        private void OnGameEnd()
+        {
+            GameTimeManager.Singleton.SetCanvasActive(false);
         }
     }
 
