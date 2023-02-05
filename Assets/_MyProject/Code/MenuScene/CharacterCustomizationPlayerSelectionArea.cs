@@ -125,8 +125,10 @@ namespace GoldenRoot.MenuScene
             }
 
             Transform t = SpawnPoint.transform;
-            characterInstance = Instantiate(characterData.CharacterPrefab, t.position, t.rotation);
-            characterInstance.transform.localScale = t.localScale;
+            characterInstance = Instantiate(characterData.CharacterPrefab, t);
+            characterInstance.transform.localPosition = Vector3.zero;
+            characterInstance.transform.localRotation = Quaternion.identity;
+            characterInstance.transform.localScale = Vector3.one;
         }
     }
 }
