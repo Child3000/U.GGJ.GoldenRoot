@@ -177,8 +177,8 @@ Transform:
   m_GameObject: {fileID: 2216221278336921724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6663978936437660607}
   m_Father: {fileID: 8715317499408247702}
@@ -533,6 +533,7 @@ MonoBehaviour:
   swingSFXs:
   - {fileID: 8300000, guid: a457f037967348e468fe301350f646af, type: 3}
   - {fileID: 8300000, guid: 0f91ebec07138334db9a7171370d4884, type: 3}
+  sfxVolume: 0.7
   _StunAttackRange: 0.7
   _StunOriginForwardOffset: 1.1
   _StunOriginHeightOffset: 1

@@ -14,6 +14,7 @@ namespace GoldenRoot
         [SerializeField] private Transform _P2ModelTrans;
 
         [SerializeField] private Transform _CameraTransform;
+        [SerializeField] private GameObject _CanvasGO;
 
         private GameState _GameState;
 
@@ -35,6 +36,7 @@ namespace GoldenRoot
 
         public void PlayButtonPressed()
         {
+            this._CanvasGO.SetActive(false);
             this._MenuSceneManager.StartMenuSceneInAdditiveMode(
                 (s) =>
                 {
@@ -51,6 +53,14 @@ namespace GoldenRoot
                     this._GameState = GameState.Playing;
                 }
             );
+        }
+
+        public void ReturnToMainMenu()
+        {
+            Sequence seq = DOTween.Sequence();
+            seq.Append(this._CameraTransform.DOJump(new Vector3(4f, 9f, 4f), 0.5f, 1, 3.0f))
+               .Join(this._CameraTransform.DORotate(new Vector3(90f, 0f, 0f), 3.0f, RotateMode.Fast))
+               .AppendCallback(() => this._CanvasGO.SetActive(true));
         }
 
         private void MoveCameraToGameplay()

@@ -39,7 +39,11 @@ namespace GoldenRoot
 
                 TargetFaceDirection = moveDirection.normalized;
             }
-            
+
+            Vector3 position = transform.position;
+            position.y = 0.0f;
+            transform.position = position;
+
             // rotation
             if (TargetFaceDirection != Vector3.zero)
             {

@@ -48,12 +48,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _NoiseScale: 0.5
-    - _Power: 5
+    - _NoiseScale: 0.05
+    - _Power: 4
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _WindSpeed: 2
-    - _WindStrength: 0.3
+    - _WindSpeed: 5
+    - _WindStrength: 0.003
     m_Colors:
     - _Color: {r: 0.32578826, g: 0.5411765, b: 0.35624716, a: 1}
   m_BuildTextureStacks: []
