@@ -68,6 +68,14 @@ namespace GoldenRoot
             pointData.CurrentPoint += value;
         }
 
+        public void ResetPoints()
+        {
+            foreach (var point in _PointsDatas)
+            {
+                point.CurrentPoint = 0;
+            }
+        }
+
         public float GetPoint(PlayerReference.PlayerID playerType)
         {
             var pointData = _PointsDatas.First(x => x.PlayerType == playerType);

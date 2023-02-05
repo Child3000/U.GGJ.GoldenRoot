@@ -71,6 +71,7 @@ namespace GoldenRoot
         public void PlayButtonPressed()
         {
             this._MainMenu.SetActive(false);
+            GamePointManager.Singleton.ResetPoints();
             this._MenuSceneManager.StartMenuSceneInAdditiveMode(
                 (s) =>
                 {
@@ -123,9 +124,15 @@ namespace GoldenRoot
         public void ReturnToMainMenu()
         {
             Sequence seq = DOTween.Sequence();
-            seq.Append(this._CameraTransform.DOJump(new Vector3(4f, 9f, 4f), 0.5f, 1, 3.0f))
-                .Join(this._CameraTransform.DORotate(new Vector3(90f, 0f, 0f), 3.0f, RotateMode.Fast))
+            seq.Append(this._CameraTransform.DOJump(new Vector3(4f, 4f, -9f), 0.5f, 1, 3.0f))
+                .Join(this._CameraTransform.DORotate(new Vector3(0.01f, 0f, 0f), 3.0f, RotateMode.Fast))
                 .AppendCallback(() => this._MainMenu.SetActive(true));
+        }
+
+        public void GameOverToMainMenu()
+        {
+            this.ReturnToMainMenu();
+            this.PlayClip(this._MenuClip, true, 1.0f);
         }
 
         private void MoveCameraToGameplay()
@@ -139,6 +146,7 @@ namespace GoldenRoot
         {
             GameTimeManager.Singleton.SetCanvasActive(false);
             this._GameOverMenu.SetActive(true);
+            this._GameState = GameState.Menu;
         }
     }
 
