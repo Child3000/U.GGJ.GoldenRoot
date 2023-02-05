@@ -15,6 +15,10 @@ namespace GoldenRoot
         [SerializeField] private float _ShovelRevertSpeed;
         [SerializeField] private Transform _DigTarget;
         [SerializeField] private GridMap2D _GridMap2D;
+        [SerializeField] private AudioSource _AudioSource;
+        [SerializeField] private AudioClip[] digSFXs;
+        [SerializeField] private AudioClip[] swingSFXs;
+        [SerializeField] private float sfxVolume = 0.7f;
 
         /************************************************************************************************************************/
         // Stun Players
@@ -100,6 +104,10 @@ namespace GoldenRoot
 
                 // rotate shovel
                 this._ShovelTrans.localRotation = Quaternion.Euler(this._ShovelRotateAmount, 0.0f, 0.0f);
+
+                // play dig sound
+                int clipToPlay = UnityEngine.Random.Range(0, digSFXs.Length);
+                _AudioSource.PlayOneShot(digSFXs[clipToPlay], sfxVolume);
             }
 
             if (PlayerInput.IsAttack && !IsStunActionInCooldown)
