@@ -31,7 +31,7 @@ namespace GoldenRoot
             {
                 ScoreP1 = Mathf.FloorToInt(GamePointManager.Singleton.GetPoint(PlayerReference.PlayerID.P1)),
                 ScoreP2 = Mathf.FloorToInt(GamePointManager.Singleton.GetPoint(PlayerReference.PlayerID.P2))
-            } : new ScoreStats() {ScoreP1 = 80, ScoreP2 = 0});
+            } : new ScoreStats() {ScoreP1 = 0, ScoreP2 = 0});
         }
 
         private void RefreshUi(ScoreStats score)

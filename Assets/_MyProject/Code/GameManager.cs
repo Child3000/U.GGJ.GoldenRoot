@@ -138,6 +138,7 @@ namespace GoldenRoot
         private void OnGameEnd()
         {
             GameTimeManager.Singleton.SetCanvasActive(false);
+            this._GameOverMenu.SetActive(true);
         }
     }
 
