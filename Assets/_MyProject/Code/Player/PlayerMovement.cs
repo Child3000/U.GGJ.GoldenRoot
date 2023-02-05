@@ -23,8 +23,11 @@ namespace GoldenRoot
         /************************************************************************************************************************/
         [SerializeField] private AudioSource _AudioSource;
         [SerializeField] private AudioClip[] walkSFXs;
-        [SerializeField] private float sfxVolume = 1f;
+        [SerializeField] private float sfxVolume = 0.5f;
+        [SerializeField] private float walkInterval = 1f;
         /************************************************************************************************************************/
+
+        private float accumWalkTime = 0f;
 
 
         public Vector3 FaceDirection
@@ -47,8 +50,15 @@ namespace GoldenRoot
                 Vector3 motion =  moveDirection * (_MoveSpeed * Time.deltaTime);
                 _CharController.Move(motion);
 
-                StartCoroutine(PlayWalkSFX());
                 TargetFaceDirection = moveDirection.normalized;
+
+                accumWalkTime += Time.fixedDeltaTime;
+                if (accumWalkTime > walkInterval)
+                {
+                    accumWalkTime = 0;
+                    int clipToPlay = UnityEngine.Random.Range(0, walkSFXs.Length);
+                    _AudioSource.PlayOneShot(walkSFXs[clipToPlay], sfxVolume);
+                }
             }
 
             Vector3 position = transform.position;
@@ -62,22 +72,9 @@ namespace GoldenRoot
             }
         }
 
-        
-        IEnumerator PlayWalkSFX()
-        {
-            if (!_AudioSource.isPlaying)
-            {
-                int clipToPlay = UnityEngine.Random.Range(0, walkSFXs.Length);
-                _AudioSource.PlayOneShot(walkSFXs[0],sfxVolume);
-            }
-            yield return null;
-        }
-
-
-
 
         /************************************************************************************************************************/
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         private void OnValidate()
         {
             gameObject.GetComponentInParentOrChildren(ref _CharController);
